@@ -6,6 +6,8 @@ Crypto power tools for HTML.
 
 htmc extends HTML with attributes for blockchain interactions. Built for developers who want to add crypto capabilities to their web applications with minimal JavaScript, following htmx's philosophy of extending HTML's native capabilities.
 
+![htmc example](docs/htmc-example-000.png)
+
 ## Core Objectives
 
 1. **Blockchain Agnostic**
