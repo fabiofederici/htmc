@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Blockchain Explorer Demo</title>
+        <script src="config.js" type="module"></script>
+        <script src="htmc.js" type="module"></script>
+        <style>
+            body {
+                font-family: monospace;
+                max-width: 800px;
+                margin: 0 auto;
+                padding: 20px;
+            }
+
+            section {
+                margin-bottom: 30px;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            .loading {
+                color: #666;
+                font-style: italic;
+            }
+
+            .error {
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Blockchain Explorer Demo</h1>
+
+        <!-- Bitcoin Section -->
+        <section>
+            <h2>Bitcoin</h2>
+            <div class="input-group">
+                <label>Address:</label>
+                <input type="text" id="btc-wallet-input" />
+                <button id="btc-check">Check Balance</button>
+            </div>
+            <blockchain-wallet
+                bc-chain="bitcoin"
+                bc-action="get-balance"
+                bc-trigger="manual"
+                bc-loading="Fetching BTC balance..."
+                bc-error="Failed to fetch Bitcoin balance"
+                id="btc-wallet"
+            >
+                <template>
+                    <div>
+                        <p>Balance: {{balance}} BTC</p>
+                    </div>
+                </template>
+            </blockchain-wallet>
+        </section>
+
+        <!-- Ethereum Section -->
+        <section>
+            <h2>Ethereum</h2>
+            <div class="input-group">
+                <label>Address:</label>
+                <input type="text" id="eth-wallet-input" />
+                <button id="eth-check">Check Balance</button>
+            </div>
+            <blockchain-wallet
+                bc-chain="ethereum"
+                bc-action="get-balance"
+                bc-trigger="manual"
+                bc-loading="Fetching ETH balance..."
+                bc-error="Failed to fetch Ethereum balance"
+                id="eth-wallet"
+            >
+                <template>
+                    <div>
+                        <p>Balance: {{balance}} ETH</p>
+                    </div>
+                </template>
+            </blockchain-wallet>
+        </section>
+
+        <!-- Solana Section -->
+        <section>
+            <h2>Solana</h2>
+            <div class="input-group">
+                <label>Address:</label>
+                <input type="text" id="sol-wallet-input" />
+                <button id="sol-check">Check Balance</button>
+            </div>
+            <blockchain-wallet
+                bc-chain="solana"
+                bc-action="get-balance"
+                bc-trigger="manual"
+                bc-loading="Fetching SOL balance..."
+                bc-error="Failed to fetch Solana balance"
+                id="sol-wallet"
+            >
+                <template>
+                    <div>
+                        <p>Balance: {{balance}} SOL</p>
+                    </div>
+                </template>
+            </blockchain-wallet>
+        </section>
+
+        <script type="module">
+            import { BlockchainWallet } from "./htmc.js";
+            import { NETWORKS } from "./config.js";
+
+            // Initialize addresses
+            document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById("btc-wallet-input").value =
+                    NETWORKS.BITCOIN.mainnet.exampleAddress;
+                document.getElementById("eth-wallet-input").value =
+                    NETWORKS.ETHEREUM.mainnet.exampleAddress;
+                document.getElementById("sol-wallet-input").value =
+                    NETWORKS.SOLANA.mainnet.exampleAddress;
+            });
+
+            // Setup click handlers
+            document
+                .getElementById("btc-check")
+                .addEventListener("click", () => {
+                    BlockchainWallet.checkBalance("btc-wallet");
+                });
+
+            document
+                .getElementById("eth-check")
+                .addEventListener("click", () => {
+                    BlockchainWallet.checkBalance("eth-wallet");
+                });
+
+            document
+                .getElementById("sol-check")
+                .addEventListener("click", () => {
+                    BlockchainWallet.checkBalance("sol-wallet");
+                });
+        </script>
+    </body>
+</html>
